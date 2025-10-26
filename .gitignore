@@ -1,0 +1,12 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails and file metadata
+._*
+.Spotlight-V100
+.Trashes
+
+# Visual Studio Code specific
+.vscode/
