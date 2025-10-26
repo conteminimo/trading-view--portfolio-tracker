@@ -1,0 +1,205 @@
+//@version=6
+indicator("Portfolio Tracker", shorttitle="Tracker", overlay=true)
+
+// --- ⚙️ SETTINGS ---
+color positiveColor = input.color(color.new(color.green, 15), title="Positive Label Color")
+color negativeColor = input.color(color.new(color.red, 15), title="Negative Label Color")
+
+// --- TICKERS & AVG COSTS & QUANTITIES ---
+string ticker1_id = input.string("BATS:AMZN", title="1. Ticker ID")
+float  ticker1_cost = input.float(183.41, title="   Avg. Cost")
+float  ticker1_qty  = input.float(359, title="   Quantity")
+
+string ticker2_id = input.string("TSX_DLY:BN", title="2. Ticker ID")
+float  ticker2_cost = input.float(54.24, title="   Avg. Cost")
+float  ticker2_qty  = input.float(1334, title="   Quantity")
+
+string ticker3_id = input.string("BATS:GOOG", title="3. Ticker ID")
+float  ticker3_cost = input.float(149.78, title="   Avg. Cost")
+float  ticker3_qty  = input.float(233, title="   Quantity")
+
+string ticker4_id = input.string("BATS:ASML", title="4. Ticker ID (US)")
+float  ticker4_cost = input.float(719.78, title="   Avg. Cost")
+float  ticker4_qty  = input.float(47, title="   Quantity")
+
+string ticker5_id = input.string("BATS:BABA", title="5. Ticker ID")
+float  ticker5_cost = input.float(83.71, title="   Avg. Cost")
+float  ticker5_qty  = input.float(275, title="   Quantity")
+
+string ticker6_id = input.string("BATS:MELI", title="6. Ticker ID")
+float  ticker6_cost = input.float(2101.00, title="   Avg. Cost")
+float  ticker6_qty  = input.float(20, title="   Quantity")
+
+string ticker7_id = input.string("BATS:SPGI", title="7. Ticker ID")
+float  ticker7_cost = input.float(495.27, title="   Avg. Cost")
+float  ticker7_qty  = input.float(41, title="   Quantity")
+
+string ticker8_id = input.string("EURONEXT_DLY:ASML", title="8. Ticker ID (Euronext)")
+float  ticker8_cost = input.float(606.21, title="   Avg. Cost")
+float  ticker8_qty  = input.float(14, title="   Quantity")
+
+string ticker9_id = input.string("OTC_DLY:EVVTY", title="9. Ticker ID")
+float  ticker9_cost = input.float(79.35, title="   Avg. Cost")
+float  ticker9_qty  = input.float(160, title="   Quantity")
+
+string ticker10_id = input.string("BATS:BN", title="10. Ticker ID (US)")
+float  ticker10_cost = input.float(23.11, title="   Avg. Cost")
+float  ticker10_qty  = input.float(202, title="   Quantity")
+
+string ticker11_id = input.string("BATS:SPLG", title="11. Ticker ID")
+float  ticker11_cost = input.float(52.21, title="   Avg. Cost")
+float  ticker11_qty  = input.float(112, title="   Quantity")
+
+string ticker12_id = input.string("BATS:DUOL", title="12. Ticker ID")
+float  ticker12_cost = input.float(280.74, title="   Avg. Cost")
+float  ticker12_qty  = input.float(28, title="   Quantity")
+
+string ticker13_id = input.string("BATS:EFX", title="13. Ticker ID")
+float  ticker13_cost = input.float(236.76, title="   Avg. Cost")
+float  ticker13_qty  = input.float(34, title="   Quantity")
+
+string ticker14_id = input.string("BATS:BIDU", title="14. Ticker ID")
+float  ticker14_cost = input.float(92.92, title="   Avg. Cost")
+float  ticker14_qty  = input.float(43, title="   Quantity")
+
+string ticker15_id = input.string("BATS:ADBE", title="15. Ticker ID")
+float  ticker15_cost = input.float(333.03, title="   Avg. Cost")
+float  ticker15_qty  = input.float(15, title="   Quantity")
+
+string ticker16_id = input.string("BATS:BRK.B", title="16. Ticker ID")
+float  ticker16_cost = input.float(332.02, title="   Avg. Cost")
+float  ticker16_qty  = input.float(9, title="   Quantity")
+
+string ticker17_id = input.string("BATS:MSCI", title="17. Ticker ID")
+float  ticker17_cost = input.float(532.42, title="   Avg. Cost")
+float  ticker17_qty  = input.float(8, title="   Quantity")
+
+string ticker18_id = input.string("BATS:SCHG", title="18. Ticker ID")
+float  ticker18_cost = input.float(25.14, title="   Avg. Cost")
+float  ticker18_qty  = input.float(127, title="   Quantity")
+
+string ticker19_id = input.string("EURONEXT_DLY:CSPX", title="19. Ticker ID")
+float  ticker19_cost = input.float(568.19, title="   Avg. Cost")
+float  ticker19_qty  = input.float(5.197501, title="   Quantity")
+
+string ticker20_id = input.string("BATS:CRM", title="20. Ticker ID")
+float  ticker20_cost = input.float(245.00, title="   Avg. Cost")
+float  ticker20_qty  = input.float(11, title="   Quantity")
+
+string ticker21_id = input.string("EURONEXT_DLY:WPEA", title="21. Ticker ID")
+float  ticker21_cost = input.float(4.85, title="   Avg. Cost")
+float  ticker21_qty  = input.float(301, title="   Quantity")
+
+string ticker22_id = input.string("EURONEXT_DLY:IWDA", title="22. Ticker ID")
+float  ticker22_cost = input.float(108.85, title="   Avg. Cost")
+float  ticker22_qty  = input.float(0.918737, title="   Quantity")
+
+// --- 🧠 LOGIC ---
+string currentTicker = syminfo.tickerid
+float avgCost = na
+float qty = na
+
+if str.contains(currentTicker, ticker1_id) and ticker1_id != ""
+    avgCost := ticker1_cost
+    qty := ticker1_qty
+else if str.contains(currentTicker, ticker2_id) and ticker2_id != ""
+    avgCost := ticker2_cost
+    qty := ticker2_qty
+else if str.contains(currentTicker, ticker3_id) and ticker3_id != ""
+    avgCost := ticker3_cost
+    qty := ticker3_qty
+else if str.contains(currentTicker, ticker4_id) and ticker4_id != ""
+    avgCost := ticker4_cost
+    qty := ticker4_qty
+else if str.contains(currentTicker, ticker5_id) and ticker5_id != ""
+    avgCost := ticker5_cost
+    qty := ticker5_qty
+else if str.contains(currentTicker, ticker6_id) and ticker6_id != ""
+    avgCost := ticker6_cost
+    qty := ticker6_qty
+else if str.contains(currentTicker, ticker7_id) and ticker7_id != ""
+    avgCost := ticker7_cost
+    qty := ticker7_qty
+else if str.contains(currentTicker, ticker8_id) and ticker8_id != ""
+    avgCost := ticker8_cost
+    qty := ticker8_qty
+else if str.contains(currentTicker, ticker9_id) and ticker9_id != ""
+    avgCost := ticker9_cost
+    qty := ticker9_qty
+else if str.contains(currentTicker, ticker10_id) and ticker10_id != ""
+    avgCost := ticker10_cost
+    qty := ticker10_qty
+else if str.contains(currentTicker, ticker11_id) and ticker11_id != ""
+    avgCost := ticker11_cost
+    qty := ticker11_qty
+else if str.contains(currentTicker, ticker12_id) and ticker12_id != ""
+    avgCost := ticker12_cost
+    qty := ticker12_qty
+else if str.contains(currentTicker, ticker13_id) and ticker13_id != ""
+    avgCost := ticker13_cost
+    qty := ticker13_qty
+else if str.contains(currentTicker, ticker14_id) and ticker14_id != ""
+    avgCost := ticker14_cost
+    qty := ticker14_qty
+else if str.contains(currentTicker, ticker15_id) and ticker15_id != ""
+    avgCost := ticker15_cost
+    qty := ticker15_qty
+else if str.contains(currentTicker, ticker16_id) and ticker16_id != ""
+    avgCost := ticker16_cost
+    qty := ticker16_qty
+else if str.contains(currentTicker, ticker17_id) and ticker17_id != ""
+    avgCost := ticker17_cost
+    qty := ticker17_qty
+else if str.contains(currentTicker, ticker18_id) and ticker18_id != ""
+    avgCost := ticker18_cost
+    qty := ticker18_qty
+else if str.contains(currentTicker, ticker19_id) and ticker19_id != ""
+    avgCost := ticker19_cost
+    qty := ticker19_qty
+else if str.contains(currentTicker, ticker20_id) and ticker20_id != ""
+    avgCost := ticker20_cost
+    qty := ticker20_qty
+else if str.contains(currentTicker, ticker21_id) and ticker21_id != ""
+    avgCost := ticker21_cost
+    qty := ticker21_qty
+else if str.contains(currentTicker, ticker22_id) and ticker22_id != ""
+    avgCost := ticker22_cost
+    qty := ticker22_qty
+
+// --- DRAWING THE LINE ---
+plot(series=avgCost, title="Average Cost", color=color.green, linewidth=2, style=plot.style_line, trackprice=true)
+
+// --- LABEL LOGIC ---
+var label percentLabel = na
+
+if barstate.islast and not na(avgCost)
+    float percent_diff = (close - avgCost) / avgCost * 100
+    float totalPL = (close - avgCost) * qty
+    string sign = percent_diff >= 0 ? "+" : ""
+    string plSign = totalPL >= 0 ? "+" : ""
+    
+
+    string labelText = sign + str.tostring(percent_diff, '#.##') + "%\n" + plSign + "$" + str.tostring(totalPL, '#.##0,##')
+    
+    color bgColor = percent_diff >= 0 ? positiveColor : negativeColor
+    
+    if na(percentLabel)
+        percentLabel := label.new(
+             x=bar_index,
+             y=avgCost,
+             text=labelText,
+             xloc=xloc.bar_index,
+             yloc=yloc.price,
+             style=label.style_label_left,
+             color=bgColor,
+             textcolor=color.white,
+             size=size.normal
+             )
+    else
+        label.set_xy(percentLabel, bar_index, avgCost)
+        label.set_text(percentLabel, labelText)
+        label.set_color(percentLabel, bgColor)
+else
+    if not na(percentLabel)
+        label.delete(percentLabel)
+        percentLabel := na
