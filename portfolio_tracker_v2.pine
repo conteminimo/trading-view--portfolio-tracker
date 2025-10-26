@@ -179,7 +179,7 @@ if barstate.islast and not na(avgCost)
     string plSign = totalPL >= 0 ? "+" : ""
     
 
-    string labelText = sign + str.tostring(percent_diff, '#.##') + "%\n" + plSign + "$" + str.tostring(totalPL, '#.##0,##')
+    string labelText = sign + str.tostring(percent_diff, "#.##") + "%\n" + plSign + "$" + str.tostring(totalPL, "#,###.##")
     
     color bgColor = percent_diff >= 0 ? positiveColor : negativeColor
     
