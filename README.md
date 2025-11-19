@@ -39,3 +39,35 @@ Commit your changes using Git to keep a clean history.
 Copy the entire code from your local file.
 
 Paste it into the TradingView Pine Editor and save.
+
+How to Add a New Ticker
+To add more slots to your list (e.g., to add a 24th ticker), you need to modify the script code in two specific places. Since Pine Script does not support dynamic input arrays, this must be done manually in the editor.
+
+Step 1: Add the Inputs
+Scroll to the top section under // --- TICKERS ---. Copy the last block of inputs (ID, Cost, and Quantity) and paste it immediately below. Update the variable names to the next number in the sequence.
+
+Pine Script
+
+// Example: Adding Ticker 24
+string ticker24_id = input.string("AAPL", title="24. Ticker ID")
+float  ticker24_cost = input.float(150.00, title="   Avg. Cost")
+float  ticker24_qty  = input.float(10,     title="   Quantity")
+
+Step 2: Update the Logic
+Scroll down to the // --- 🧠 LOGIC --- section. You will see a chain of if and else if statements. Add a new else if block at the very end of this chain (just before the // --- DRAWING --- section).
+
+Pine Script
+
+else if match(ticker24_id)
+    avgCost := ticker24_cost
+    qty := ticker24_qty
+    
+Advanced: Handling Duplicate Tickers
+If you hold the same ticker symbol on two different exchanges (e.g., one in USD and one in CAD), you must filter by currency to avoid conflicts.
+
+Pine Script
+
+// Example: checking for CAD currency explicitly
+else if match(ticker24_id) and currencyCode == "CAD"
+    avgCost := ticker24_cost
+    qty := ticker24_qty
