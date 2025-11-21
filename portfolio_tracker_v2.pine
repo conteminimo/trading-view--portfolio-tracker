@@ -52,7 +52,7 @@ float  ticker11_qty  = input.float(112, title="   Quantity")
 
 string ticker12_id = input.string("DUOL", title="12. Ticker ID")
 float  ticker12_cost = input.float(242.62, title="   Avg. Cost")
-float  ticker12_qty  = input.float(28, title="   Quantity")
+float  ticker12_qty  = input.float(56, title="   Quantity")
 
 string ticker13_id = input.string("EFX", title="13. Ticker ID")
 float  ticker13_cost = input.float(236.76, title="   Avg. Cost")
@@ -97,6 +97,10 @@ float  ticker22_qty  = input.float(0.918737, title="   Quantity")
 string ticker23_id = input.string("NFLX", title="23. Ticker ID")
 float  ticker23_cost = input.float(108.709, title="   Avg. Cost")
 float  ticker23_qty  = input.float(8, title="   Quantity")
+
+string ticker24_id = input.string("TQQQ", title="24. Ticker ID")
+float  ticker24_cost = input.float(53.185, title="   Avg. Cost")
+float  ticker24_qty  = input.float(599, title="   Quantity")
 
 // --- 🧠 LOGIC ---
 // Using simplified ticker matching to avoid Exchange issues (BATS vs NASDAQ)
@@ -179,7 +183,10 @@ else if match(ticker22_id)
     qty := ticker22_qty
 else if match(ticker23_id)
     avgCost := ticker23_cost
-    qty := ticker23_qty
+    qty := ticker24_qty
+else if match(ticker24_id)
+    avgCost := ticker24_cost
+    qty := ticker24_qty
 
 // --- DRAWING THE LINE ---
 plot(series=avgCost, title="Average Cost", color=color.green, linewidth=2, style=plot.style_line, trackprice=true)
